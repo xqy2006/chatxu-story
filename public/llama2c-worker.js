@@ -14,11 +14,11 @@ self.addEventListener('message', async function(e){
     env: {memory: wasmMemory, table: new WebAssembly.Table({initial: 2, element: 'anyfunc'})},
   };
   //var fileRequest = await fetch(pageDirectory + '/' + 'tokenizer.bin');
-  var fileRequest = await fetch("https://yyl7gxngtyixiqkg.public.blob.vercel-storage.com/tokenizer.bin");
+  var fileRequest = await fetch("https://github.com/xqy2006/chatxu-story/releases/download/0.0.1/tokenizer.bin");
   var fileContent = await fileRequest.arrayBuffer();
 
   //var modelURL = pageDirectory + '/' + 'model.bin';
-  var modelURL = "https://yyl7gxngtyixiqkg.public.blob.vercel-storage.com/model.bin";
+  var modelURL = "https://github.com/xqy2006/chatxu-story/releases/download/0.0.1/model.bin";
   if (isLocalhost()) { modelURL = pageDirectory + '/' + 'model.bin'; }
 
   var modelFileRequest = await fetch(modelURL);
@@ -98,5 +98,5 @@ self.addEventListener('message', async function(e){
     return url.indexOf('127.0.0.1') !== -1 || url.indexOf('localhost') !== -1;
   }
 
-  result = await WASIJS.start(fetch('https://yyl7gxngtyixiqkg.public.blob.vercel-storage.com/llama2c.wasm'), context, wasmImports);
+  result = await WASIJS.start(fetch('https://github.com/xqy2006/chatxu-story/releases/download/0.0.1/llama2c.wasm'), context, wasmImports);
 })
