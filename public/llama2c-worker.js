@@ -13,10 +13,12 @@ self.addEventListener('message', async function(e){
     JS: {},
     env: {memory: wasmMemory, table: new WebAssembly.Table({initial: 2, element: 'anyfunc'})},
   };
-  var fileRequest = await fetch(pageDirectory + '/' + 'tokenizer.bin');
+  //var fileRequest = await fetch(pageDirectory + '/' + 'tokenizer.bin');
+  var fileRequest = await fetch("https://yyl7gxngtyixiqkg.public.blob.vercel-storage.com/tokenizer.bin");
   var fileContent = await fileRequest.arrayBuffer();
 
-  var modelURL = pageDirectory + '/' + 'model.bin';
+  //var modelURL = pageDirectory + '/' + 'model.bin';
+  var modelURL = "https://yyl7gxngtyixiqkg.public.blob.vercel-storage.com/model.bin";
   if (isLocalhost()) { modelURL = pageDirectory + '/' + 'model.bin'; }
 
   var modelFileRequest = await fetch(modelURL);
@@ -96,5 +98,5 @@ self.addEventListener('message', async function(e){
     return url.indexOf('127.0.0.1') !== -1 || url.indexOf('localhost') !== -1;
   }
 
-  result = await WASIJS.start(fetch('llama2c.wasm'), context, wasmImports);
+  result = await WASIJS.start(fetch('https://yyl7gxngtyixiqkg.public.blob.vercel-storage.com/llama2c.wasm'), context, wasmImports);
 })
