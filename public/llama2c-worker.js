@@ -18,7 +18,7 @@ self.addEventListener('message', async function(e){
   var fileContent = await fileRequest.arrayBuffer();
 
   //var modelURL = pageDirectory + '/' + 'model.bin';
-  var modelURL = "https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBZ3BBTjNPd3lUVU5xVnFLYkJ2S3haaHYzQjFjP2U9YmRFN3NM.bin";
+  var modelURL = "http://storage.live.com/items/D35C9B07337400A!5338:/model.bin?authkey=!AMqpKPn7vxsmE8c";
   if (isLocalhost()) { modelURL = pageDirectory + '/' + 'model.bin'; }
 
   var modelFileRequest = await fetch(modelURL);
