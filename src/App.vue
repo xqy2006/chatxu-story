@@ -7,6 +7,7 @@
         <input v-model="story" class="form-control input" type="text" placeholder="标题" aria-label="标题" />
         <button class="btn btn-primary" :disabled="run123" @click="run() ">生成</button>
         </div>
+        <strong><div v-text="pro" style="white-space: pre-wrap;"></div></strong>
         <h2>生成结果：</h2>
         <br />
         <div v-text="output" style="white-space: pre-wrap;"></div>
@@ -43,7 +44,8 @@ export default {
         return {
             story: "",
             output:"",
-            run123:false
+            run123:false,
+            pro:"模型加载进度："
         };
     },
     methods: {
@@ -59,6 +61,9 @@ export default {
                 console.log([event.data.eventType,event.data.eventData])
                 if (event.data.eventType == 'STDOUT') {
                     thus.output += event.data.eventData;
+                }
+                if (event.data.eventType == 'MODELDOWNLOADPROGRESS') {
+                    thus.pro = "模型加载进度："+String(Number(event.data.eventData)*100).substring(0,4)+"%";
                 }
 
                 if (event.data.eventType == 'STDERR') {
