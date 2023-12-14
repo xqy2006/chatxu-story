@@ -1,4 +1,9 @@
 self.addEventListener('message', async function(e){
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then(function() {
+        console.log('Service Worker 注册成功');
+    });
+    }
   var pageDirectory = self.location.href.substr(0, self.location.href.lastIndexOf('/'));
   var wasiModule = await import(pageDirectory + '/vendor/wasi.js');
   var WASIJS = wasiModule.WASI;
