@@ -33,11 +33,7 @@ body {
 <script>
 export default {
     created() {
-        if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(function() {
-        console.log('Service Worker 注册成功');
-    });
-    }
+
     },
 
     data() {
@@ -50,6 +46,7 @@ export default {
     },
     methods: {
         run() {
+            this.pro = "模型加载进度："
             this.run123 = true
             this.output = ""
             var thus = this
