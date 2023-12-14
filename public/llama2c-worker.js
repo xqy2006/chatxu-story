@@ -17,12 +17,17 @@ self.addEventListener('message', async function(e){
   //var fileRequest = await fetch("https://github.com/xqy2006/chatxu-story/releases/download/0.0.1/tokenizer.bin");
   var fileContent = await fileRequest.arrayBuffer();
 
-  //var modelURL = pageDirectory + '/' + 'model.bin';
-  var modelURL = "http://storage.live.com/items/D35C9B07337400A!5338:/model.bin?authkey=!AMqpKPn7vxsmE8c";
-  if (isLocalhost()) { modelURL = pageDirectory + '/' + 'model.bin'; }
+  var modelURL = pageDirectory + '/' + 'model1.bin';
+  //var modelURL = "http://storage.live.com/items/D35C9B07337400A!5338:/model.bin?authkey=!AMqpKPn7vxsmE8c";
+  if (isLocalhost()) { modelURL = pageDirectory + '/' + 'model1.bin'; }
 
   var modelFileRequest = await fetch(modelURL);
-  var contentLength = modelFileRequest.headers.get('Content-Length');
+  var modelURL = pageDirectory + '/' + 'model_2.bin';
+  if (isLocalhost()) { modelURL = pageDirectory + '/' + 'model_2.bin'; }
+
+  var modelFileRequest2 = await fetch(modelURL);
+
+  var contentLength = String(Number(modelFileRequest.headers.get('Content-Length'))+Number(modelFileRequest2.headers.get('Content-Length')));
 
   var responseSize = 0;
   let chunksAll = new Uint8Array(contentLength); // (4.1)
@@ -35,7 +40,14 @@ self.addEventListener('message', async function(e){
       eventData: responseSize / contentLength
     });
   }
-
+  for await (var chunk of streamAsyncIterable(modelFileRequest2.body)) {
+    chunksAll.set(chunk, responseSize); // (4.2)
+    responseSize += chunk.length;
+    self.postMessage({
+      eventType: "MODELDOWNLOADPROGRESS",
+      eventData: responseSize / contentLength
+    });
+  }
   async function* streamAsyncIterable(stream) {
     const reader = stream.getReader()
     try {
